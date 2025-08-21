@@ -82,7 +82,7 @@ analytics:
 author:
   name             : "Yuliang Fu @NCSU"
   avatar           : "profile.png"
-  bio              : "PhD student and HCI researcher at North Carolina State University"
+  bio              : "PhD student at North Carolina State University"
   location         : #"Location"
   CV               : "/files/CV_YuliangFu.pdf"
   employer         :
@@ -104,7 +104,7 @@ author:
   impactstory      : #"https://profiles.impactstory.org/u/xxxx-xxxx-xxxx-xxxx"
   lastfm           :
   LinkedIn         : "https://www.linkedin.com/in/yuliang-fu-253884237/"
-  orcid            : # "http://orcid.org/yourorcidurl"
+  orcid            : "https://orcid.org/0009-0007-6777-3373"
   pinterest        :
   soundcloud       :
   stackoverflow    : # http://stackoverflow.com/users/123456/username
