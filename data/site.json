@@ -1,0 +1,274 @@
+{
+  "name": "Yuliang Fu",
+  "url": "https://fuyuliang02.github.io",
+  "email": "yfu34@ncsu.edu",
+  "description": "Yuliang Fu is a Computer Science Ph.D. student at NC State University with interests in artificial intelligence, sensing, and computing for health.",
+  "links": [
+    {
+      "label": "Google Scholar",
+      "icon": "scholar",
+      "url": "https://scholar.google.com/citations?user=NMFwlm4AAAAJ"
+    },
+    {
+      "label": "LinkedIn",
+      "icon": "linkedin",
+      "url": "https://www.linkedin.com/in/yuliang-fu-253884237/"
+    },
+    {
+      "label": "ORCID",
+      "icon": "orcid",
+      "url": "https://orcid.org/0009-0007-6777-3373"
+    },
+    {
+      "label": "Email",
+      "icon": "mail",
+      "url": "mailto:yfu34@ncsu.edu"
+    }
+  ],
+  "publications": [
+    {
+      "id": "epipad",
+      "name": "EpiPad",
+      "year": 2026,
+      "type": "Journal",
+      "selected": true,
+      "title": "EpiPad: Enabling Multi-Finger and Force-Sensitive Skin Interface for Smartwatches",
+      "authors": [
+        "Yuliang Fu",
+        "Rakshita Ranganath",
+        "Huining Li",
+        "Chenhan Xu"
+      ],
+      "venue": "ACM IMWUT / UbiComp 2026",
+      "venueFull": "Proceedings of the ACM on Interactive, Mobile, Wearable and Ubiquitous Technologies",
+      "image": "/assets/papers/thumbnail_EpiPad.png",
+      "alt": "EpiPad concept: a smartwatch sensing multi-finger gestures on the forearm to control a map.",
+      "summary": "Using the skin as an input surface for smartwatches.",
+      "tags": [
+        "Human–computer interaction",
+        "mmWave sensing"
+      ],
+      "doi": "10.1145/3810191",
+      "links": [
+        {
+          "label": "Paper",
+          "url": "https://doi.org/10.1145/3810191"
+        }
+      ]
+    },
+    {
+      "id": "touchwave",
+      "name": "TouchWave",
+      "year": 2025,
+      "type": "Conference",
+      "selected": true,
+      "title": "TouchWave: Exploring mmWave-based Non-contact Fingertip-force Sensing in Activities of Daily Living",
+      "authors": [
+        "Yuliang Fu",
+        "Zhi Zhang",
+        "Rakshita Ranganath",
+        "Zhizhen Li",
+        "Yuchen Liu",
+        "Ning Sui",
+        "Huining Li",
+        "Chenhan Xu"
+      ],
+      "venue": "IEEE BSN 2025",
+      "venueFull": "IEEE-EMBS International Conference on Body Sensor Networks",
+      "image": "/assets/papers/thumbnail_TouchWave.png",
+      "alt": "TouchWave overview showing mmWave radar sensing fingertip force during everyday activities.",
+      "summary": "Measuring fingertip force during everyday activities without contact.",
+      "tags": [
+        "mmWave sensing",
+        "Mobile health"
+      ],
+      "links": [
+        {
+          "label": "PDF",
+          "url": "https://chenhanxu.github.io/publication/bsn_25a/paper.pdf"
+        }
+      ]
+    },
+    {
+      "id": "mv-imu",
+      "name": "mV-IMU",
+      "year": 2025,
+      "type": "Conference",
+      "selected": false,
+      "title": "mV-IMU: mmWave-enabled Virtual Inertia Measurement Unit for High-fidelity Activities of Daily Living Monitoring",
+      "authors": [
+        "Zhi Zhang",
+        "Chongxin Zhong",
+        "Yuliang Fu",
+        "Ying Chen",
+        "Jinyuan Jia",
+        "Huining Li",
+        "Chenhan Xu"
+      ],
+      "venue": "IEEE BSN 2025",
+      "venueFull": "IEEE-EMBS International Conference on Body Sensor Networks",
+      "image": "/assets/papers/thumbnail_mV-IMU.png",
+      "alt": "mV-IMU system illustration for mmWave-based virtual inertial measurement.",
+      "summary": "Monitoring everyday movement through wireless sensing.",
+      "tags": [
+        "mmWave sensing",
+        "Activity monitoring"
+      ],
+      "links": [
+        {
+          "label": "PDF",
+          "url": "https://chenhanxu.github.io/publication/bsn_25b/paper.pdf"
+        }
+      ]
+    },
+    {
+      "id": "hand-grip",
+      "name": "Hand-Grip",
+      "year": 2025,
+      "type": "Conference",
+      "selected": false,
+      "title": "Hand-Grip Strength Estimation through Bioacoustic Sensing",
+      "authors": [
+        "Rakshita Ranganath",
+        "Zhi Zhang",
+        "Yuliang Fu",
+        "Jinyuan Jia",
+        "Ying Chen",
+        "Huining Li",
+        "Chenhan Xu"
+      ],
+      "venue": "IEEE BSN 2025",
+      "venueFull": "IEEE-EMBS International Conference on Body Sensor Networks",
+      "image": "/assets/papers/thumbnail_Hand-Grip.png",
+      "alt": "Bioacoustic hand-grip sensing prototype and experimental setup.",
+      "summary": "Estimating hand-grip strength with a wearable device.",
+      "tags": [
+        "Bioacoustic sensing",
+        "Mobile health"
+      ],
+      "links": [
+        {
+          "label": "PDF",
+          "url": "https://chenhanxu.github.io/publication/bsn_25c/paper.pdf"
+        }
+      ]
+    }
+  ],
+  "news": [
+    {
+      "date": "2026-06",
+      "displayDate": "Jun 2026",
+      "category": "Paper",
+      "text": "EpiPad appears at ACM IMWUT / UbiComp 2026.",
+      "link": "/publications/#epipad"
+    },
+    {
+      "date": "2026",
+      "displayDate": "2026",
+      "category": "Award",
+      "text": "Received the Graduate Merit Award from North Carolina State University."
+    },
+    {
+      "date": "2026",
+      "displayDate": "2026",
+      "category": "Service",
+      "text": "Serving on the Technical Program Committee and as a reviewer for IEEE BSN 2026."
+    },
+    {
+      "date": "2025-11",
+      "displayDate": "Nov 2025",
+      "category": "Paper",
+      "text": "Three papers at IEEE BSN 2025: TouchWave, mV-IMU, and Hand-Grip Strength Estimation.",
+      "link": "/publications/#year-2025"
+    },
+    {
+      "date": "2025",
+      "displayDate": "2025",
+      "category": "Travel",
+      "text": "Received the NC State GSA Travel Assistance Award and the IEEE BSN Student Travel Award."
+    },
+    {
+      "date": "2024-08",
+      "displayDate": "Aug 2024",
+      "category": "Milestone",
+      "text": "Started my Ph.D. in Computer Science at NC State, joining the SSCS Lab advised by Dr. Chenhan Xu."
+    }
+  ],
+  "experience": [
+    {
+      "period": "Aug 2024 — Present",
+      "place": "North Carolina State University",
+      "group": "SSCS Lab",
+      "url": "https://chenhanxu.github.io/lab/",
+      "role": "Ph.D. Student",
+      "location": "Raleigh, NC",
+      "advisor": "Chenhan Xu",
+      "advisorUrl": "https://chenhanxu.github.io/",
+      "description": "Developing sensing and learning methods for everyday computing and health applications."
+    },
+    {
+      "period": "Nov 2023 — Jan 2024",
+      "place": "JD.com",
+      "group": "Research & Development",
+      "role": "Research and Development Intern",
+      "location": "Beijing, China",
+      "description": "Used sensor data to analyze workloads and improve task allocation."
+    },
+    {
+      "period": "Jun 2023 — Sep 2023",
+      "place": "Cornell University",
+      "group": "SciFi Lab",
+      "url": "https://www.scifilab.org/",
+      "role": "Student Research Intern",
+      "location": "Ithaca, NY",
+      "advisor": "Cheng Zhang",
+      "advisorUrl": "http://www.czhang.org/",
+      "description": "Explored sensing and machine learning with everyday devices."
+    },
+    {
+      "period": "Apr 2022 — Jun 2023",
+      "place": "Tsinghua University",
+      "group": "Pervasive HCI Group",
+      "url": "https://pi.cs.tsinghua.edu.cn/",
+      "role": "Research Assistant",
+      "location": "Beijing, China",
+      "advisor": "Yuntao Wang",
+      "advisorUrl": "https://pi.cs.tsinghua.edu.cn/lab/people/YuntaoWang/en/",
+      "description": "Developed sensing and communication methods for connected devices."
+    }
+  ],
+  "education": [
+    {
+      "school": "North Carolina State University",
+      "degree": "Ph.D. in Computer Science",
+      "date": "In progress · Expected May 2029"
+    },
+    {
+      "school": "North Carolina State University",
+      "degree": "M.S. en route in Computer Science",
+      "date": "May 2026"
+    },
+    {
+      "school": "Tsinghua University",
+      "degree": "Dual B.S. in Mathematics and Physics; Electrical Engineering and Automation",
+      "date": "July 2024"
+    }
+  ],
+  "awards": [
+    {
+      "year": "2026",
+      "title": "Graduate Merit Award",
+      "organization": "North Carolina State University"
+    },
+    {
+      "year": "2025",
+      "title": "GSA Travel Assistance Award",
+      "organization": "North Carolina State University"
+    },
+    {
+      "year": "2025",
+      "title": "Student Travel Award",
+      "organization": "IEEE-EMBS Conference on Body Sensor Networks"
+    }
+  ]
+}

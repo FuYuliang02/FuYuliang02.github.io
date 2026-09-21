@@ -1,31 +1,96 @@
-A Github Pages template for academic websites. This was forked (then detached) by [Stuart Geiger](https://github.com/staeiou) from the [Minimal Mistakes Jekyll Theme](https://mmistakes.github.io/minimal-mistakes/), which is © 2016 Michael Rose and released under the MIT License. See LICENSE.md.
+# Yuliang Fu — academic website
 
-I think I've got things running smoothly and fixed some major bugs, but feel free to file issues or make pull requests if you want to improve the generic template / theme.
+A responsive personal website for research interests in artificial intelligence, sensing, and computing for health. Built with plain HTML, CSS, and a little JavaScript; no runtime framework, third-party fonts, or npm dependencies.
 
-### Note: if you are using this repo and now get a notification about a security vulnerability, delete the Gemfile.lock file. 
+## Local preview
 
-# Instructions
+Use Node.js 20 or newer:
 
-1. Register a GitHub account if you don't have one and confirm your e-mail (required!)
-1. Fork [this repository](https://github.com/academicpages/academicpages.github.io) by clicking the "fork" button in the top right. 
-1. Go to the repository's settings (rightmost item in the tabs that start with "Code", should be below "Unwatch"). Rename the repository "[your GitHub username].github.io", which will also be your website's URL.
-1. Set site-wide configuration and create content & metadata (see below -- also see [this set of diffs](http://archive.is/3TPas) showing what files were changed to set up [an example site](https://getorg-testacct.github.io) for a user with the username "getorg-testacct")
-1. Upload any files (like PDFs, .zip files, etc.) to the files/ directory. They will appear at https://[your GitHub username].github.io/files/example.pdf.  
-1. Check status by going to the repository settings, in the "GitHub pages" section
-1. (Optional) Use the Jupyter notebooks or python scripts in the `markdown_generator` folder to generate markdown files for publications and talks from a TSV file.
+```sh
+npm run dev
+```
 
-See more info at https://academicpages.github.io/
+Open http://127.0.0.1:4173. The preview server binds only to your computer. Stop it with Ctrl+C. After editing content or the generator, run `npm run build` and refresh; CSS and browser JavaScript edits need only a refresh. To use another port, set the `PORT` environment variable.
 
-## To run locally (not on GitHub Pages, to serve on your own computer)
+## Updating content
 
-1. Clone the repository and made updates as detailed above
-1. Make sure you have ruby-dev, bundler, and nodejs installed: `sudo apt install ruby-dev ruby-bundler nodejs`
-1. Run `bundle clean` to clean up the directory (no need to run `--force`)
-1. Run `bundle install` to install ruby dependencies. If you get errors, delete Gemfile.lock and try again.
-1. Run `bundle exec jekyll liveserve` to generate the HTML and serve it from `localhost:4000` the local server will automatically rebuild and refresh the pages on change.
+### File map
 
-# Changelog -- bugfixes and enhancements
+All paths below are relative to this repository (`FuYuliang02.github.io`). Edit the source files, then rebuild; the HTML pages are generated.
 
-There is one logistical issue with a ready-to-fork template theme like academic pages that makes it a little tricky to get bug fixes and updates to the core theme. If you fork this repository, customize it, then pull again, you'll probably get merge conflicts. If you want to save your various .yml configuration files and markdown files, you can delete the repository and fork it again. Or you can manually patch. 
+| Information to update | Source file | Where to edit |
+| --- | --- | --- |
+| Top biography, background, advisor, and research interests | `scripts/build.mjs` | The `const home` section: the `affiliation` / `intro` paragraphs and the `research-grid`. |
+| Publications: titles, authors, venues, years, paper links, summaries | `data/site.json` | The `publications` array. `selected: true` features a paper on the homepage. Author order follows the array. |
+| Publication thumbnails | `assets/papers/` and `data/site.json` | Add the image, then set that publication's `image` path and `alt` description. |
+| Homepage news, dates, categories, and links | `data/site.json` | The `news` array, in the desired display order. `category` supplies the filter/tag; category colors live in `assets/site.css` under `.tag-*`. |
+| LinkedIn, Google Scholar, ORCID, and profile email link | `data/site.json` | The `links` array. Keep Google Scholar first: the publications page currently uses `links[0]`. |
+| Email shown in the footer and CV page | `data/site.json` | The top-level `email` field. When changing email, also update the Email entry in `links`. |
+| Research and industry positions | `data/site.json` | The `experience` array, including dates, organization, role, advisor, and description. |
+| Education and awards | `data/site.json` | The `education` and `awards` arrays. Education is reused on both Experience and CV pages. |
+| Reviewing and program committee service | `scripts/build.mjs` | The `const experience` section, under `Service`, `Technical Program Committee`, and `Reviewer`. |
+| Portrait | `assets/images/profile.png` | Replace the image at this path. |
+| Downloadable CV | `files/CV.pdf` and `files/CV_YuliangFu.pdf` | Replace both copies; the second preserves an older shared URL. Refresh the optional preview as described below. |
+| CV preview images | `scripts/render-cv.mjs` → `assets/cv/` | Run `npm run render:cv`; do not hand-edit the generated images or `preview.json`. |
+| Colors, fonts, spacing, layout, mobile styling | `assets/site.css` | Palette/font variables at the top; component rules below; responsive rules in the `@media` sections. |
+| Browser-tab icon | `assets/favicon.svg` | Edit this SVG. The header monogram is separately defined in `scripts/build.mjs` and styled in `assets/site.css`. |
+| Navigation, page headings, footer, and page structure | `scripts/build.mjs` | `nav`, `layout()`, and the `home`, `pubs`, `experience`, and `cv` templates. |
+| Search, filters, and citation-copy behavior | `assets/site.js` | Browser interaction handlers. |
+| Site name, domain, search/social description | `data/site.json` | Top-level `name`, `url`, and `description`. Visible name, university, role, and location also appear in `scripts/build.mjs`, including its structured metadata. |
 
-To support this, all changes to the underlying code appear as a closed issue with the tag 'code change' -- get the list [here](https://github.com/academicpages/academicpages.github.io/issues?q=is%3Aclosed%20is%3Aissue%20label%3A%22code%20change%22%20). Each issue thread includes a comment linking to the single commit or a diff across multiple commits, so those with forked repositories can easily identify what they need to patch.
+The sibling `../resources/` folder supplied the original materials. The website uses the copies inside this repository; changing `resources/` alone does not update the site.
+
+### Update workflow
+
+- **Publications, news, links, education, experience, awards:** edit `data/site.json`.
+- **Page structure and biography:** edit `scripts/build.mjs`.
+- **Appearance:** edit `assets/site.css`. The palette and typography are defined at the top.
+- **Interactions:** edit `assets/site.js`.
+- **Thumbnails:** place images in `assets/papers/`, then set each publication’s `image` and descriptive `alt` text in the data file. Thumbnails use `object-fit: contain` to preserve the complete figure.
+- **Portrait:** replace `assets/images/profile.png`.
+- **CV:** replace `files/CV.pdf`. Also update `files/CV_YuliangFu.pdf` to keep old shared links current. To refresh the optional image preview, run `npm run render:cv` before building (requires Poppler's `pdftoppm` on PATH, or the `PDFTOPPM` environment variable set to its executable). The build checks the PDF's hash and omits stale previews, keeping the direct download links available. Normal builds use the committed preview images and do not require Poppler.
+
+Then run:
+
+```sh
+npm run build
+npm run check
+```
+
+Commit the content and generated files together. Generated files include `index.html`, the page directories, `404.html`, the compatibility redirects, `sitemap.xml`, `robots.txt`, and the four `.bib` files. Do not edit those HTML files directly; a build replaces them.
+
+A publication needs a unique `id`, year, type (`Journal` or `Conference`), title, ordered author list, venue, thumbnail, summary, and working paper link. Mark `selected: true` to feature it on the homepage. The build generates a minimal BibTeX citation using verified metadata; it intentionally omits unverified page numbers, volume, issue, and DOIs. Yuliang Fu’s name is highlighted automatically.
+
+News categories are generated from the data, so new categories appear automatically. Existing color styles cover Paper, Award, Travel, Service, and Milestone. Store news in the desired display order. Use year-only dates when the month is unknown; do not invent publication, award, or travel dates.
+
+## GitHub Pages
+
+The generated site is committed at the repository root. In GitHub **Settings → Pages**, use **Deploy from a branch**, select the publishing branch, and select **/ (root)**. The `.nojekyll` file prevents Jekyll processing; no Ruby or GitHub Actions build is required. This reconstruction does not change remote settings or publish until the changes are pushed to the configured publishing branch.
+
+The canonical URL in `data/site.json` is `https://fuyuliang02.github.io`. Root-relative links assume this user-site domain or a custom domain at its root, rather than a project site under a subdirectory. `/about/`, `/about.html`, and `/resume/` redirect to their replacements. Both previously used CV URLs serve the supplied latest CV.
+
+## Pages and behavior
+
+- **Home:** biography and background, research interests, categorized news, selected work, and profile contact links.
+- **Publications:** thumbnails, ordered authors, venue information, paper links, downloadable/copyable BibTeX, keyword search, year and publication-type filters.
+- **Experience:** research and industry experience, education, honors, academic service.
+- **CV:** accessible summary, rendered document preview, direct PDF open/download links.
+- **404:** navigation back to the site.
+
+All content, paper links, citation disclosures, and navigation work without JavaScript. Filtering and clipboard copy are progressive enhancements. The site includes keyboard focus styles, a skip link, image descriptions, filter announcements, reduced-motion support, print styles, canonical links, social metadata, a sitemap, and structured person data.
+
+## Content sources
+
+Reconstructed from the owner-supplied `../resources/CV.pdf` and four supplied thumbnails, plus the former site's LinkedIn link and portrait. The provided CV contains the current email, Scholar profile, research history, publication author order, awards, and service. The original template and sample publications/posts have been removed; their prior versions remain in Git history.
+
+Verified supporting links:
+
+- [EpiPad publisher record](https://doi.org/10.1145/3810191), with June 2026 publication metadata verified through [Crossref](https://api.crossref.org/works/10.1145/3810191).
+- [Advisor publication list](https://chenhanxu.github.io/publication/), including the three BSN 2025 papers and their author-hosted PDFs.
+- [Advisor news](https://chenhanxu.github.io/), supporting June 2026 IMWUT and November 2025 BSN news dates.
+
+Travel news reports documented travel awards; it does not assert undocumented attendance or upcoming travel. No placeholder projects, invented achievements, metrics, or unverified code/video links are included.
+
+## Validation
+
+`npm run check` verifies generated pages, local asset links, cross-page anchor targets, unique HTML IDs, publication count, author highlighting, generated citations, the CV signature, and the GitHub Pages marker. Browser checks should also cover news filters, combined publication filters, empty results/reset, citation copy/download, responsive layouts, missing images, and navigation with JavaScript disabled.

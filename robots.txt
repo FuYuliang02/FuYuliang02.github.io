@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://fuyuliang02.github.io/sitemap.xml
