@@ -6,6 +6,19 @@ import { createHash } from 'node:crypto';
 const root = fileURLToPath(new URL('../', import.meta.url));
 const site = JSON.parse(await readFile(path.join(root, 'data/site.json'), 'utf8'));
 const news = [...site.news].sort((a, b) => b.date.localeCompare(a.date));
+// Citation files are manually maintained. Read them before writing any output.
+const citations = new Map();
+for (const publication of site.publications) {
+  const file = `files/${publication.id}.bib`;
+  let citation;
+  try {
+    citation = await readFile(path.join(root, file), 'utf8');
+  } catch (error) {
+    throw new Error(`Cannot read citation ${file}. Add this manually maintained BibTeX file before building.`, { cause: error });
+  }
+  if (!citation.trim()) throw new Error(`Citation ${file} is empty. Add its BibTeX content before building.`);
+  citations.set(publication.id, citation);
+}
 let cvPreview = '';
 try {
   const preview = JSON.parse(await readFile(path.join(root, 'assets/cv/preview.json'), 'utf8'));
@@ -62,14 +75,6 @@ function layout(title, current, content, description = site.description) {
 </body></html>`;
 }
 
-function bibtex(p) {
-  const authors = p.authors.map(n => { const parts = n.split(' '); return `${parts.pop()}, ${parts.join(' ')}`; }).join(' and ');
-  if (p.type === 'Preprint') {
-    return `@misc{${p.id.replace(/-/g, '')}${p.year},\n  title = {${p.title}},\n  author = {${authors}},\n  year = {${p.year}},\n  eprint = {${p.arxiv}},\n  archivePrefix = {arXiv},\n  primaryClass = {${p.primaryClass}},\n  url = {https://arxiv.org/abs/${p.arxiv}}\n}`;
-  }
-  return `@${p.type === 'Journal' ? 'article' : 'inproceedings'}{${p.id.replace(/-/g, '')}${p.year},\n  title = {${p.title}},\n  author = {${authors}},\n  ${p.type === 'Journal' ? 'journal' : 'booktitle'} = {${p.venueFull}},\n  year = {${p.year}}${p.doi ? `,\n  doi = {${p.doi}}` : ''}\n}`;
-}
-
 function paper(p, compact = false) {
   return `<article class="paper${compact ? ' paper-selected' : ''}" id="${p.id}"${compact ? '' : ` data-paper data-year="${p.year}" data-type="${p.type}" data-search="${esc([p.title, ...p.authors, p.venue, ...p.tags].join(' ').toLowerCase())}"`}>
     <a class="paper-image" href="${compact ? `/publications/#${p.id}` : esc(p.links[0].url)}" aria-label="${esc(p.name)}: ${compact ? 'publication details' : 'read paper'}"><img src="${p.image}" alt="${esc(p.alt)}" width="640" height="350" loading="lazy"><span class="image-arrow" aria-hidden="true">↗</span></a>
@@ -78,7 +83,7 @@ function paper(p, compact = false) {
     <p class="authors">${p.authors.map(a => a === site.name ? `<strong class="self-author">${esc(a)}</strong>` : esc(a)).join(', ')}</p>
     <p class="paper-summary">${esc(p.summary)}</p>
     <div class="paper-links">${p.links.map(l => `<a href="${esc(l.url)}">${icon('document')}${esc(l.label)} ${arrow}</a>`).join('')}${compact ? `<a href="/publications/#${p.id}">Details <span aria-hidden="true">→</span></a>` : `<a href="/files/${p.id}.bib" download>BibTeX <span aria-hidden="true">↓</span></a>`}</div>
-    ${compact ? '' : `<details class="citation"><summary>View citation</summary><div class="citation-content"><pre>${esc(bibtex(p))}</pre><button type="button" class="copy-citation" hidden>Copy BibTeX</button><span class="copy-status" role="status"></span></div></details>`}</div></article>`;
+    ${compact ? '' : `<details class="citation"><summary>View citation</summary><div class="citation-content"><pre><code>${esc(citations.get(p.id))}</code></pre><button type="button" class="copy-citation" hidden>Copy BibTeX</button><span class="copy-status" role="status"></span></div></details>`}</div></article>`;
 }
 
 const home = `
@@ -132,9 +137,7 @@ for (const [file, destination] of [['about/index.html', '/'], ['about.html', '/'
   await mkdir(path.dirname(path.join(root, file)), { recursive: true });
   await writeFile(path.join(root, file), `<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Page moved · Yuliang Fu</title><meta http-equiv="refresh" content="0;url=${destination}"><link rel="canonical" href="${site.url}${destination}"></head><body><p>This page has moved. <a href="${destination}">Continue to the new page.</a></p></body></html>`);
 }
-await mkdir(path.join(root, 'files'), { recursive: true });
-for (const p of site.publications) await writeFile(path.join(root, `files/${p.id}.bib`), bibtex(p) + '\n');
 await writeFile(path.join(root, 'sitemap.xml'), `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${pages.filter(p => p[0] !== '404.html').map(p => `<url><loc>${site.url}${p[2]}</loc></url>`).join('')}</urlset>\n`);
 await writeFile(path.join(root, 'robots.txt'), `User-agent: *\nAllow: /\nSitemap: ${site.url}/sitemap.xml\n`);
-console.log(`Built ${pages.length} pages, 3 redirects, and ${site.publications.length} citations.`);
+console.log(`Built ${pages.length} pages, 3 redirects, using ${citations.size} existing citation files.`);
 

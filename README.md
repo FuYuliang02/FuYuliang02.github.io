@@ -22,6 +22,7 @@ All paths below are relative to this repository (`FuYuliang02.github.io`). Edit 
 | --- | --- | --- |
 | Top biography, background, advisor, and research interests | `scripts/build.mjs` | The `const home` section: the `affiliation` / `intro` paragraphs and the `research-grid`. |
 | Publications: titles, authors, venues, years, paper links, summaries | `data/site.json` | The `publications` array. `selected: true` features a paper on the homepage. Author order follows the array. |
+| Citation text (display, copy, and download) | `files/<publication-id>.bib` | Edit the BibTeX file directly, then rebuild. The build only reads these files and never creates or overwrites them. |
 | Publication thumbnails | `assets/papers/` and `data/site.json` | Add the image, then set that publication's `image` path and `alt` description. |
 | Homepage news, dates, categories, and links | `data/site.json` | The `news` array, in the desired display order. `category` supplies the filter/tag; category colors live in `assets/site.css` under `.tag-*`. |
 | LinkedIn, Google Scholar, ORCID, and profile email link | `data/site.json` | The `links` array. Keep Google Scholar first: the publications page currently uses `links[0]`. |
@@ -57,9 +58,9 @@ npm run build
 npm run check
 ```
 
-Commit the content and generated files together. Generated files include `index.html`, the page directories, `404.html`, the compatibility redirects, `sitemap.xml`, `robots.txt`, and the generated `.bib` files. Do not edit those HTML files directly; a build replaces them.
+Commit the content and generated files together. Generated files include `index.html`, the page directories, `404.html`, the compatibility redirects, `sitemap.xml`, `robots.txt`. Do not edit those HTML files directly; a build replaces them.
 
-A publication needs a unique `id`, year, type (`Journal`, `Conference`, or `Preprint`), title, ordered author list, venue, thumbnail, summary, and working paper link. Mark `selected: true` to feature it on the homepage. The build generates a minimal BibTeX citation using verified metadata; it intentionally omits unverified page numbers, volume, issue, and DOIs. Yuliang Fu’s name is highlighted automatically.
+A publication needs a unique `id`, year, type (`Journal`, `Conference`, or `Preprint`), title, ordered author list, venue, thumbnail, summary, and working paper link. Mark `selected: true` to feature it on the homepage. For every publication, manually create `files/<id>.bib` (for example, `files/actreal.bib`). Its contents are the sole source for View citation, Copy BibTeX, and the BibTeX download. The build reads the file verbatim, escaping it only for safe HTML display; it never synthesizes or overwrites citation text. Missing or empty files stop the build with an explanatory error before any pages are written. Publication-card metadata remains in `data/site.json` and does not override citations. Yuliang Fu’s name is highlighted automatically.
 
 News filters use the fixed order All, Milestone, Paper, Award, Travel, Others. Use these category names in the data. News is sorted by date, newest first; equal dates retain their data-file order. The scrollable news list initially fits six items, recalculating as text wraps or filters change. Older items remain accessible by scrolling. Preprints belong in the publications array only; do not add news entries for them. Use year-only dates when the month is unknown; do not invent publication, award, or travel dates.
 
@@ -93,6 +94,8 @@ Travel news reports documented travel awards; it does not assert undocumented at
 
 ## Validation
 
-`npm run check` verifies generated pages, local asset links, cross-page anchor targets, unique HTML IDs, publication count, author highlighting, generated citations, the CV signature, and the GitHub Pages marker. Browser checks should also cover news filters, combined publication filters, empty results/reset, citation copy/download, responsive layouts, missing images, and navigation with JavaScript disabled.
+`npm run check` verifies generated pages, local asset links, cross-page anchor targets, unique HTML IDs, publication count, author highlighting, displayed citations matching the `.bib` sources, the CV signature, and the GitHub Pages marker. Browser checks should also cover news filters, combined publication filters, empty results/reset, citation copy/download, responsive layouts, missing images, and navigation with JavaScript disabled.
 
-Preprints use `type: "Preprint"`, an `arxiv` identifier, and `primaryClass` for generated arXiv BibTeX citations. ActReal metadata comes from https://arxiv.org/abs/2608.30038.
+Preprints use `type: "Preprint"` in the publication data. Maintain their full citation, including arXiv fields, in `files/<id>.bib`; data fields such as `arxiv` and `primaryClass` do not generate or update the citation. ActReal metadata comes from https://arxiv.org/abs/2608.30038.
+
+After editing a `.bib` file, run `node scripts/build.mjs` and `node scripts/check.mjs` to refresh and verify the displayed/copyable text. Downloads serve the original file directly. Run `node --test scripts/citations.test.mjs` to verify manual citation preservation and missing-file handling in an isolated temporary site.
