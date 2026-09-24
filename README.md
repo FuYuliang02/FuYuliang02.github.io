@@ -57,11 +57,11 @@ npm run build
 npm run check
 ```
 
-Commit the content and generated files together. Generated files include `index.html`, the page directories, `404.html`, the compatibility redirects, `sitemap.xml`, `robots.txt`, and the four `.bib` files. Do not edit those HTML files directly; a build replaces them.
+Commit the content and generated files together. Generated files include `index.html`, the page directories, `404.html`, the compatibility redirects, `sitemap.xml`, `robots.txt`, and the generated `.bib` files. Do not edit those HTML files directly; a build replaces them.
 
-A publication needs a unique `id`, year, type (`Journal` or `Conference`), title, ordered author list, venue, thumbnail, summary, and working paper link. Mark `selected: true` to feature it on the homepage. The build generates a minimal BibTeX citation using verified metadata; it intentionally omits unverified page numbers, volume, issue, and DOIs. Yuliang Fu’s name is highlighted automatically.
+A publication needs a unique `id`, year, type (`Journal`, `Conference`, or `Preprint`), title, ordered author list, venue, thumbnail, summary, and working paper link. Mark `selected: true` to feature it on the homepage. The build generates a minimal BibTeX citation using verified metadata; it intentionally omits unverified page numbers, volume, issue, and DOIs. Yuliang Fu’s name is highlighted automatically.
 
-News categories are generated from the data, so new categories appear automatically. Existing color styles cover Paper, Award, Travel, Service, and Milestone. Store news in the desired display order. Use year-only dates when the month is unknown; do not invent publication, award, or travel dates.
+News filters use the fixed order All, Milestone, Paper, Award, Travel, Others. Use these category names in the data. News is sorted by date, newest first; equal dates retain their data-file order. The scrollable news list initially fits six items, recalculating as text wraps or filters change. Older items remain accessible by scrolling. Preprints belong in the publications array only; do not add news entries for them. Use year-only dates when the month is unknown; do not invent publication, award, or travel dates.
 
 ## GitHub Pages
 
@@ -94,3 +94,5 @@ Travel news reports documented travel awards; it does not assert undocumented at
 ## Validation
 
 `npm run check` verifies generated pages, local asset links, cross-page anchor targets, unique HTML IDs, publication count, author highlighting, generated citations, the CV signature, and the GitHub Pages marker. Browser checks should also cover news filters, combined publication filters, empty results/reset, citation copy/download, responsive layouts, missing images, and navigation with JavaScript disabled.
+
+Preprints use `type: "Preprint"`, an `arxiv` identifier, and `primaryClass` for generated arXiv BibTeX citations. ActReal metadata comes from https://arxiv.org/abs/2608.30038.

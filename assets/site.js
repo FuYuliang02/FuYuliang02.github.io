@@ -1,6 +1,17 @@
 // Content is rendered at build time; JavaScript only enhances filtering and copying.
 const newsButtons = [...document.querySelectorAll('[data-news-filter]')];
 if (newsButtons.length) {
+  const list = document.querySelector('.news-list');
+  // Measure actual row heights so six complete items fit at every screen width.
+  function sizeNews() {
+    const rows = [...list.querySelectorAll('.news-item')].filter(row => !row.hidden).slice(0, 6);
+    const height = rows.reduce((sum, row) => sum + row.getBoundingClientRect().height, 0);
+    list.style.maxHeight = `${Math.ceil(height)}px`;
+  }
+  const observer = new ResizeObserver(sizeNews);
+  list.querySelectorAll('.news-item').forEach(row => observer.observe(row));
+  sizeNews();
+  document.fonts.ready.then(sizeNews);
   document.querySelector('.news-filters').hidden = false;
   newsButtons.forEach(button => button.addEventListener('click', () => {
     newsButtons.forEach(b => b.setAttribute('aria-pressed', String(b === button)));
@@ -10,6 +21,8 @@ if (newsButtons.length) {
       if (!item.hidden) count++;
     });
     document.querySelector('#news-status').textContent = `${count} ${count === 1 ? 'update' : 'updates'} shown`;
+    list.scrollTop = 0;
+    sizeNews();
   }));
 }
 

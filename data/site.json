@@ -27,6 +27,44 @@
   ],
   "publications": [
     {
+      "id": "actreal",
+      "name": "ActReal",
+      "year": 2026,
+      "type": "Preprint",
+      "selected": false,
+      "title": "ActReal: System-Level Mobile Agents Challenge Mobile Automation Detection",
+      "authors": [
+        "Mingshuo Wang",
+        "Hanqing Guo",
+        "Huining Li",
+        "Yuliang Fu",
+        "Jing Xu",
+        "Chenhan Xu"
+      ],
+      "venue": "arXiv · 2026",
+      "venueFull": "arXiv preprint arXiv:2608.30038",
+      "image": "/assets/papers/thumbnail_ActReal.png",
+      "alt": "ActReal framework connecting mobile agent actions with touch and motion signals.",
+      "summary": "Exploring how mobile agents challenge automation detection.",
+      "tags": [
+        "Artificial intelligence",
+        "Mobile agents",
+        "Security"
+      ],
+      "arxiv": "2608.30038",
+      "primaryClass": "cs.CR",
+      "links": [
+        {
+          "label": "arXiv",
+          "url": "https://arxiv.org/abs/2608.30038"
+        },
+        {
+          "label": "PDF",
+          "url": "https://arxiv.org/pdf/2608.30038"
+        }
+      ]
+    },
+    {
       "id": "epipad",
       "name": "EpiPad",
       "year": 2026,
@@ -156,42 +194,60 @@
   ],
   "news": [
     {
-      "date": "2026-06",
-      "displayDate": "Jun 2026",
+      "date": "2026-10",
+      "displayDate": "Oct 2026",
+      "category": "Travel",
+      "text": "Travelling to Shanghai, China for UbiComp/ISWC 2026!"
+    },
+    {
+      "date": "2026-09",
+      "displayDate": "Sep 2026",
+      "category": "Others",
+      "text": "Gave a talk about our vision of ubiquitous touch sensing at the NC State CPS-Robotics Seminar."
+    },
+    {
+      "date": "2026-05",
+      "displayDate": "May 2026",
       "category": "Paper",
-      "text": "EpiPad appears at ACM IMWUT / UbiComp 2026.",
+      "text": "EpiPad accepted by ACM IMWUT / UbiComp 2026.",
       "link": "/publications/#epipad"
     },
     {
-      "date": "2026",
-      "displayDate": "2026",
+      "date": "2026-05",
+      "displayDate": "May 2026",
       "category": "Award",
       "text": "Received the Graduate Merit Award from North Carolina State University."
     },
     {
-      "date": "2026",
-      "displayDate": "2026",
-      "category": "Service",
-      "text": "Serving on the Technical Program Committee and as a reviewer for IEEE BSN 2026."
+      "date": "2026-05",
+      "displayDate": "May 2026",
+      "category": "Milestone",
+      "text": "Received my Master en route at NC State."
     },
     {
       "date": "2025-11",
       "displayDate": "Nov 2025",
-      "category": "Paper",
-      "text": "Three papers at IEEE BSN 2025: TouchWave, mV-IMU, and Hand-Grip Strength Estimation.",
-      "link": "/publications/#year-2025"
+      "category": "Travel",
+      "text": "Travelling to Los Angeles, CA for IEEE BSN 2026! The trip is kindly supported by the NC State GSA Travel Assistance Award and the IEEE BSN Student Travel Award."
     },
     {
-      "date": "2025",
-      "displayDate": "2025",
-      "category": "Travel",
-      "text": "Received the NC State GSA Travel Assistance Award and the IEEE BSN Student Travel Award."
+      "date": "2025-08",
+      "displayDate": "Aug 2025",
+      "category": "Paper",
+      "text": "Three papers accepted by IEEE BSN 2025: TouchWave, mV-IMU, and Hand-Grip Strength Estimation.",
+      "link": "/publications/#year-2025"
     },
     {
       "date": "2024-08",
       "displayDate": "Aug 2024",
       "category": "Milestone",
       "text": "Started my Ph.D. in Computer Science at NC State, joining the SSCS Lab advised by Dr. Chenhan Xu."
+    },
+    {
+      "date": "2024-06",
+      "displayDate": "Jun 2024",
+      "category": "Milestone",
+      "text": "Graduated from Tsinghua University! Really enjoyed my four years in Beijing."
     }
   ],
   "experience": [

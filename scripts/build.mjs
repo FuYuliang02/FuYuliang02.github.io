@@ -5,6 +5,7 @@ import { createHash } from 'node:crypto';
 
 const root = fileURLToPath(new URL('../', import.meta.url));
 const site = JSON.parse(await readFile(path.join(root, 'data/site.json'), 'utf8'));
+const news = [...site.news].sort((a, b) => b.date.localeCompare(a.date));
 let cvPreview = '';
 try {
   const preview = JSON.parse(await readFile(path.join(root, 'assets/cv/preview.json'), 'utf8'));
@@ -63,6 +64,9 @@ function layout(title, current, content, description = site.description) {
 
 function bibtex(p) {
   const authors = p.authors.map(n => { const parts = n.split(' '); return `${parts.pop()}, ${parts.join(' ')}`; }).join(' and ');
+  if (p.type === 'Preprint') {
+    return `@misc{${p.id.replace(/-/g, '')}${p.year},\n  title = {${p.title}},\n  author = {${authors}},\n  year = {${p.year}},\n  eprint = {${p.arxiv}},\n  archivePrefix = {arXiv},\n  primaryClass = {${p.primaryClass}},\n  url = {https://arxiv.org/abs/${p.arxiv}}\n}`;
+  }
   return `@${p.type === 'Journal' ? 'article' : 'inproceedings'}{${p.id.replace(/-/g, '')}${p.year},\n  title = {${p.title}},\n  author = {${authors}},\n  ${p.type === 'Journal' ? 'journal' : 'booktitle'} = {${p.venueFull}},\n  year = {${p.year}}${p.doi ? `,\n  doi = {${p.doi}}` : ''}\n}`;
 }
 
@@ -82,9 +86,9 @@ const home = `
   <aside class="profile-card" aria-label="Profile and contact links"><div class="portrait-wrap"><img class="portrait" src="/assets/images/profile.png" alt="Portrait of Yuliang Fu" width="400" height="400" fetchpriority="high"></div><div class="profile-info"><p class="location">${icon('pin')}Raleigh, NC</p><div class="social-links">${social()}</div></div></aside>
   <div class="hero-copy"><p class="eyebrow"><span class="status-dot"></span>Ph.D. Student · NC State University</p>
     <h1 id="intro-title">Yuliang Fu<span class="title-dot">.</span></h1>
-    <p class="affiliation">I’m a Computer Science Ph.D. student in the <a href="https://chenhanxu.github.io/lab/">SSCS Lab</a> at <a href="https://www.ncsu.edu/">North Carolina State University</a>, advised by <a href="https://chenhanxu.github.io/">Dr. Chenhan Xu</a>.</p>
+    <p class="intro">I’m a Computer Science Ph.D. student in the <a href="https://chenhanxu.github.io/lab/">SSCS Lab</a> at <a href="https://www.ncsu.edu/">North Carolina State University</a>, advised by <a href="https://chenhanxu.github.io/">Dr. Chenhan Xu</a>.</p>
     <p class="intro">My research interests span artificial intelligence, sensing, and computing for health. I’m interested in learning from data and building useful intelligent systems.</p>
-    <p class="affiliation">Previously, I earned dual bachelor’s degrees in Mathematics and Physics, and Electrical Engineering and Automation at Tsinghua University. I also worked with Tsinghua’s Pervasive HCI Group and Cornell’s SciFi Lab.</p>
+    <p class="intro">Previously, I earned dual bachelor’s degrees in Mathematics and Physics, and Electrical Engineering and Automation at Tsinghua University. I also worked with Dr. Yuntao Wang at Pervasive HCI Group, Tsinghua University and Dr. Cheng Zhang at SciFi Lab, Cornell University.</p>
     <div class="hero-actions"><a class="button primary" href="/publications/">Publications <span aria-hidden="true">→</span></a><a class="button secondary" href="/files/CV.pdf">${icon('document')}View CV ${arrow}</a></div>
   </div>
 </section>
@@ -92,16 +96,16 @@ const home = `
   <div class="research-grid"><div class="research-item"><span class="research-icon">${icon('ai')}</span><h3>Artificial intelligence</h3><p>Learning from data to understand the world and support useful applications.</p></div><div class="research-item"><span class="research-icon peach">${icon('wave')}</span><h3>Sensing & computing</h3><p>Understanding people and their surroundings through data.</p></div><div class="research-item"><span class="research-icon terracotta">${icon('heart')}</span><h3>Computing for health</h3><p>Exploring technology that supports health and well-being.</p></div></div>
 </section>
 <section class="news-section" id="news" aria-labelledby="news-title"><div class="section-heading"><h2 id="news-title">News</h2></div>
-  <div class="filter-chips news-filters" role="group" aria-label="Filter news by category" hidden>${['All', ...new Set(site.news.map(n => n.category))].map((c, i) => `<button type="button" data-news-filter="${c}" aria-pressed="${i === 0}">${c}</button>`).join('')}</div>
-  <div class="news-list">${site.news.map(n => `<article class="news-item" data-category="${n.category}"><time datetime="${n.date}">${n.displayDate}</time><span class="tag tag-${n.category.toLowerCase()}">${n.category}</span><p>${esc(n.text)}${n.link ? ` <a class="news-arrow" href="${n.link}" aria-label="Read publication details">↗</a>` : ''}</p></article>`).join('')}</div><p class="sr-only" id="news-status" role="status"></p>
+  <div class="filter-chips news-filters" role="group" aria-label="Filter news by category" hidden>${['All', 'Milestone', 'Paper', 'Award', 'Travel', 'Others'].map((c, i) => `<button type="button" data-news-filter="${c}" aria-pressed="${i === 0}">${c}</button>`).join('')}</div>
+  <div class="news-list" role="region" aria-label="News updates, scroll for older items" tabindex="0">${news.map(n => `<article class="news-item" data-category="${n.category}"><time datetime="${n.date}">${n.displayDate}</time><span class="tag tag-${n.category.toLowerCase()}">${n.category}</span><p>${esc(n.text)}${n.link ? ` <a class="news-arrow" href="${n.link}" aria-label="Read publication details">↗</a>` : ''}</p></article>`).join('')}</div><p class="sr-only" id="news-status" role="status"></p>
 </section>
 <section class="selected-section" aria-labelledby="selected-title"><div class="section-heading"><h2 id="selected-title">Selected publications</h2><a class="text-link" href="/publications/">All publications <span aria-hidden="true">→</span></a></div><div class="selected-grid">${site.publications.filter(p => p.selected).map(p => paper(p, true)).join('')}</div></section>
 `;
 
 const years = [...new Set(site.publications.map(p => p.year))].sort((a, b) => b - a);
-const pubs = `<header class="page-intro"><h1>Publications</h1><p>A collection of my published work.</p><a class="text-link" href="${esc(site.links[0].url)}">Google Scholar ${arrow}</a></header>
+const pubs = `<header class="page-intro"><h1>Publications</h1><p>Published work and preprints.</p><a class="text-link" href="${esc(site.links[0].url)}">Google Scholar ${arrow}</a></header>
 <section aria-labelledby="publications-title"><div class="section-heading"><h2 id="publications-title">All publications</h2></div>
-<div class="publication-controls" hidden><label class="search-field">${icon('search')}<span class="sr-only">Search publications</span><input type="search" id="paper-search" placeholder="Search title, author, or topic…"></label><label class="year-filter"><span class="sr-only">Filter by year</span><select id="paper-year"><option value="all">All years</option>${years.map(y => `<option value="${y}">${y}</option>`).join('')}</select></label><div class="filter-chips" role="group" aria-label="Filter publications by type">${['All', 'Journal', 'Conference'].map((t, i) => `<button type="button" data-type-filter="${t}" aria-pressed="${i === 0}">${t === 'All' ? 'All work' : t + 's'}</button>`).join('')}</div></div>
+<div class="publication-controls" hidden><label class="search-field">${icon('search')}<span class="sr-only">Search publications</span><input type="search" id="paper-search" placeholder="Search title, author, or topic…"></label><label class="year-filter"><span class="sr-only">Filter by year</span><select id="paper-year"><option value="all">All years</option>${years.map(y => `<option value="${y}">${y}</option>`).join('')}</select></label><div class="filter-chips" role="group" aria-label="Filter publications by type">${['All', 'Journal', 'Conference', 'Preprint'].map((t, i) => `<button type="button" data-type-filter="${t}" aria-pressed="${i === 0}">${t === 'All' ? 'All work' : t + 's'}</button>`).join('')}</div></div>
 <p class="result-count" id="paper-count" role="status">${site.publications.length} publications</p>
 ${years.map(y => `<section class="publication-year" data-year-group="${y}" aria-labelledby="year-${y}"><h2 class="year-heading" id="year-${y}">${y}<span>${String(site.publications.filter(p => p.year === y).length).padStart(2, '0')}</span></h2><div>${site.publications.filter(p => p.year === y).map(p => paper(p)).join('')}</div></section>`).join('')}
 <div class="empty-state" id="no-results" hidden><h3>No matching publications</h3><p>Try a different keyword or clear the filters.</p><button class="button secondary" type="button" id="reset-filters">Clear filters</button></div>
